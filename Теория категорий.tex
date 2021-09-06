@@ -21,6 +21,7 @@
 \usepackage[normalem]{ulem}
 \usepackage{graphicx}
 \usepackage{makeidx}
+\usepackage{bbold}
 \makeindex
 \graphicspath{{pictures/}}
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
@@ -227,7 +228,7 @@ $\exists f\in{Hom(X, Y)}$ и $g\in{Hom(Y, X)}$ такие, что $f\circg=id_{Y
 \item $Top$: объекты -- топологические пространства, морфизмы -- непрерывные отображения. Инициальный и терминальный объект такие же, как и для $Sets$;
 \item $HTop$: $ObHTop$ -- компактно-порождённые топологические пространства, морфизмы -- непрерывные отображения, профакторизованные по гомотопиям;
 \item Категория с одним элементом, $Ob\mathcal{C}$ = ${X}$, морфизмы в этом случае образуют моноид.
-\item Частичный (пред)порядок на $M$, $Ob\mathcal{C}$ = $M$, $Hom(x, y) = {\emptyset}$, если $x\leqy$, $=\emptyset$, иначе.
+\item Частичный (пред)порядок на $M$ (ЧУМ), $Ob\mathcal{C}$ = $M$, $Hom(x, y) = {\emptyset}$, если $x\leqy$, $=\emptyset$, иначе.
 \item $Rels$, $ObRels$ = все множества, $Hom(X, Y)$ = все подмножества в $X\times{Y}$, 
 \\$R\circ S$ = $\lbrace(x, z) \vert \exists y \in Y, (x, y)\in S, (y, z)\in T\rbrace$
 
@@ -244,7 +245,51 @@ $\exists f\in{Hom(X, Y)}$ и $g\in{Hom(Y, X)}$ такие, что $f\circg=id_{Y
 \begin{defn}
 \hypertarget{n6}{\textcolor{red}{\textit{Копроизведением}}} объектов $X$ и $Y$ в категории $\mathcal{C}$ называется объект $X\amalg Y$, обладающий следующим универсальным свойством: фиксированы морфизмы $i_{X}: X\amalg Y\leftarrow X$ и $i_{Y}: X\amalg Y\leftarrow Y$ и для любого объекта $Z$ с морфизмами $f: Z\leftarrow X$ и $g: Z\leftarrow Y$, существует единственный морфизм $h: Z\leftarrow X\amalg Y$, делающий диаграмму коммутативной: $h \circ i_{X} = f$, $h \circ i_{Y} = g$.
 \end{defn}
+
+\begin{stat}
+Если (ко)произведение существует, то оно единственно с точностью до единственного изоморфизма.
+\end{stat}
+\begin{proof}
+Следует из определения через универсальное свойство. Если взять два объекта с этим свойством, то из них будут единственные стрелки в друг друга, а композиция окажется $id$, подробнее см. утверждение1. Далее подобные доказательства будут полностью опускаться.
+\end{proof}
 \newpage
+Примеры на произведение и копроизведение:\begin{itemize}
+\item $Sets$: $X\times Y$ -- обычное декартово произведение; $X\amalg Y$ -- дизъюнктное объединение $X$ и $Y$\footnote{Для меня странно, что произведение в этом случае существует всегда, а двойственное к нему -- нет, но что поделать};
+\item $Groups$: $G\times H$ -- опять же декартово произведение; $G\amalg H$ = $G\ast H$ -- свободное произведение групп (во втором семестре оно задавалось ровно этим универсальным свойством);
+\item $Top$: аналогично $Sets$;
+\item ЧУМ: $x\times y$ = $min(x, y)$, $x\amalg y$ = $max(x, y)$.
+
+Определим ещё одну важную категорию (пока что в частном случае, когда-нибудь здесь появится значительно более общее определение)
+\begin{defn}
+\hypertarget{n7}{\textcolor{red}{\textit{Категорией стрелки}}} $\mathcal{C}/A$, где $\mathcal{C}$ -- категория, а $A$ -- объект в ней, называется следующая категория: $Ob\mathcal{C}/A$ = пары $(X, f)$, где $X\in Ob\mathcal{C}$, $f\in Hom(X, A)$; $Hom((X, f), (Y, g)$ = $\lbrace h\in Hom(X, Y) \vert f = g\circ h \rbrace$. 
+\end{defn}
+
+Терминальным объектом в этой категории будет $(A, id_{A})$. Аналогично, развернув стрелки, можно определить категорию $\mathcal{C}\setminus A$
+
+\begin{defn}
+Произведение в категории стрелки называется \hypertarget{n8}{\textcolor{red}{\textit{расслоённым произведением}}}.
+\end{defn}
+Рассмотрим примеры расслоённых произведений: \begin{itemize}
+\item $Sets$: $X\times _{A} Y$ = $\lbrace(x, y) \in X\times Y\vert f(x)=g(y)\rbrace$;
+\item $Sets^{op}$: $X\amalg _{A} Y$ = $X\amalg Y / \sim$, где $\sim$ порождено $f(a) \sim g(a)$. В $Top$ это просто склейка;
+\item $Groups$: произведение как на $Sets$, $G\amalg _{K} H$ -- свободное произведение с объединённой подгруппой.
+\end{itemize}
+
+\begin{defn}
+\hypertarget{n9}{\textcolor{red}{\textit{Функтором}}} $\matcal{F}$ называется отображение между двумя категориями $\matcal{C}$ и $\matcal{D}$ (определённое и на объектах, и на морфизмах) с ожидаемыми свойствами: \begin{itemize}
+\item Если $f\in Hom(X, Y)$, то $\mathcal{F} (f)\in Hom(\mathcal{F}(X), \mathcal{F}(Y))$;
+\item $\mathcal{F}(f\circ g) = \mathcal{F}(f) \circ \mathcal{F}(g)$;
+\item $\mathcal{F}(id_{A}) = id_{\mathcal{F}(A)}$.
+\end{itemize}
+\end{defn} 
+
+Примеры функторов: \begin{itemize}
+\item $\pi _{1}: Top \rightarrow Groups$;
+\item Если $M_{1}$ и $M_{2}$ -- моноиды (как категории с одним объектом), тогда $\mathcal{F}$ -- гомоморфизм моноидов;
+\item $M$ -- моноид, $\mathcal{F}: M\rightarrow Vect_{K}$ -- это выбор векторного пространства и гомоморфизма $M \rightarrow End(V)$;
+\item В ЧУМе функторы -- монотонные отображения;
+\item $\mathcal{F}: \mathbb{1} \rightarrow \mathcal{C}$ -- выбор объекта в $\mathcal{C}$, а если наоборот, то функтор единственен, то есть одноэлементная категория с одним морфизмом -- это <<терминальная>> категория (строгое определение будет позднее).
+\end{itemize}
 \hypertarget{dex}
     \printindex
 %staryi_variant
