@@ -406,7 +406,6 @@ $\alpha \circ \alpha^{-1} = Id, \alpha^{-1} \circ \alpha = Id$ и $\beta \circ \
 \item Категория накрытий $Cov(X)$: фиксируем компактно-порождённое связное топологическое пространство $X$, $ObCov(X) =$ пары из $Y$ и накрытия $Y \rightarrow X$, морфизмы -- непрерывные отображения из $Y$ в $Z$, коммутирующее с выбранными накрытиями. Тогда $Cov(X)^{op} \simeq \pi_{1}(X)$-множества \footnote{здесь может быть когда-нибудь будет определение $G-множеств$};
 \item Есть двойственность категорий, возникающая из теории Галуа.
 \end{itemize}
-
 \begin{theorem} \se{Критерий эквивалентности категорий}{Критерий эквивалентности категорий}: 
 $F: C\rightarrow D$ задаёт эквивалентность категорий тогда и только тогда, когда выполнены следующие три условия:\begin{itemize}
 \item $F$ \se{Унивалентность функтора}{унивалентен}, то есть отображение $Hom(X, Y) \rightarrow Hom(F(X), F(Y))$ инъективно;
@@ -447,6 +446,100 @@ $A \cong B$, $C \cong D$, тогда $Hom(A, C) \cong Hom (B, D)$, причём 
 \begin{proof}
 Первое -- возьмём по представителю из каждого класса эквивалентности по отношению изоморфности. Четвёртое следует из третьего. Третье: $F$ и $G$ задают эквивалентность $C$ и $D$ $A \cong F(G(A))$, но тогда $A = F(G(A))$, построим $G'$, на объектах совпадает с $G$, $f = F(h)$ из хороших свойств $F$, $G(f) := h$.
 \end{proof}
+
+\section{Лемма Йонеды}
+\lemma \se{Лемма Йонеды}{(Лемма Йонеды)} В произвольной категории $C$ бозначим за $h_A$ \cursed{ковариантный функтор} $Hom(A, --)$, а за $Nat(F, G)$ все естественные преобразования функторов $F$ и $G$. Тогда теорема утверждает, что $Nat(h_a, F) \simeq F(A)$, где F действует из некоторой категории $C$ в $Sets$. \\
+
+Доказательство:\\
+Сначала подберем отображение "слева-направо": \\
+Есть естественное преобразование $\eta: h_A \ra F$, задача состоит в том, чтобы поставить ему в соответствие элемент из $F(A)$. Посмотрим, как оно действует на A: $Hom(A, A) \stackrel{\eta_A}{\ra} F(A)$. Т.к. C - категория, то в $Hom(A, A)$ есть $id_A$, тогда в соответствии этому естественному преобразованию поставим то, во что отобразится $id_A$, т.е. $G(\eta) = \eta_A(id_A) \in F(A)$. \\
+Теперь "справа-налево": \\
+Задан элемент $a \in F(A)$, ему в соответствие поставим естественное преобразование $\tau: h_A \ra F$ так, что для каждого $X \in Ob\;C$ задано отображение $Hom(A, X) \stackrel{\tau_X}{\ra} F(X)$, действующее следующим образом: $A \stackrel{f}{\ra} X \mapsto F(f)(a)$. Проверим его естественность: \\
+\begin{center}\includegraphics[scale=0.7]{proof-natural.PNG}\end{center}
+По верху: \\
+$f \mapsto F(f)(a) \mapsto (F(g) \circ F(f))(a)$ \\
+По низу: \\
+$f \mapsto f \circ g \mapsto F(f \circ g)(a)$ \\
+Вспомним, что наш функтор ковариантный, а он разворачивает композицию, поэтому наше преобразование действительно естественно. \\
+Теперь остается только проверить, что сопоставления взаимно обратные: \\
+В одну сторону: \\
+$a \in F(a) \longrightarrow A \stackrel{f}{X} \mapsto F(f)(a) \longrightarrow F(id_A)(a) = id_{F(A)}(a) = a$. Сошлось. \\
+В другую: \\
+$\eta_X: A \stackrel{f}{X} \mapsto \eta_A(f) \longrightarrow \eta_A(id_A) \longrightarrow \tau_X: A \stackrel{f}{\ra} X \mapsto F(f)(\eta_A(id_A))$ \\
+$\tau_X(f) = F(f)(\eta_A(id_A)) = \eta_X(Hom(A, f)(id_A)) = \eta_X(f)$. Тоже =).
+\cons $Nat(h_A, h_B) = Hom(A, B) = h_B(A)$
+\cons \se{Вложение Йонеды}{(Вложение Йонеды)} $h_-: C \ra Set^{C^{Op}}$ - полный унивалентный ковариантный функтор, который действует следующим образом: $A \mapsto h_A$, $f: B \ra A \mapsto Hom(f, -)$
+
+\section{Пределы}
+\defn \se{Постоянный функтор}{Постоянный функтор} - это функтор $const_Z: D \ra C$, $Z \in Ob\;C$, действующий следующим образом: $A \mapsto Z$, $f \mapsto id$
+\defn Категория $D$ называется \se{Малая категория(диаграмма)}{малой категорией(диаграммой)}, если ее объекты составляют множество.
+\defn $D$ - малая категория, $F: D \ra C$ - функтор. \se{Предел}{Предел} - это объект $lim\;F$, представляющий функтор, который действует следующим образом: $Z \mapsto Nat(const_Z, F)$
+\remark Предел это "произведение со стрелками, которые надо уважать" \\
+Примеры:
+\begin{enumerate}
+    \item Расслоеное произведение: $D$ - категория с тремя объектами $1, 2, 3$ и стрелками $1 \ra 3$, $2 \ra 3$ - и есть то, во что функтор F переводит это все: $X, Y, W \in Ob\;C$, стрелки $X \ra W$, $Y \ra W$. Пределом такого функтора будет объект $X \times_W Y$ со следующим свойством: $\forall Z \in Ob\;C$ и $Z \ra X$, $Z \ra Y$ $\exists !h: Z \ra X \times_W Y$, сохраняющая коммутативность диаграммы.
+    \begin{center}\includegraphics[scale=0.7]{rassloenaya_bulka.PNG}\end{center}
+    \item Уравнитель морфизмов: $D$ - категория с двумя объектами $1, 2$ и двумя стрелками $1 \ra 2$ - и есть то, во что функтор F переводит это все: $X, Y \in Ob\;C$, две стрелки $f, g: X \ra Y$. Пределом такого функтора будет объект $Eq(f, g)$ со следуюшим свойством: $\forall Z \in Ob\;C$ и $h: Z \ra X$, причем $f \circ h = g \circ h$, $\exists !\alpha: Z \ra Eq(f, g)$, сохраняющая коммутативность диаграммы. \\
+    Уравнитель для $C = Sets$ будет такой: $Eq(f, g) = \{x \in X | f(x) = g(x)\}$
+    \begin{center}\includegraphics[scale=0.7]{uravnitel-dps.PNG}\end{center}
+    \item Пусть в $D$ есть инициальный объект $A$. Тогда $lim\;F = F(A)$
+\end{enumerate}
+\defn \se{Копредел}{Копредел} $F: D \ra C$ - это объект, копредставляющий функтор $G: Z \mapsto Nat(F, const_Z)$. Копредставляющий в том смысле, что $G \simeq Hom(Colim\;F, --)$ \\
+Примеры:
+\begin{enumerate}
+    \item D - дискретная, т.е. есть категория, в которой есть только тождественные морфизмы. $Ob\;D = I$, есть то, во что функтор их переводит: $(X_i \in C)_{i\in I}$. Копределом для такой конструкции называется копроизведение $\coprod X_i$. В $Sets$ это дизъюнктное объединение
+    \item $D$ - категория "два объекта - две параллельные стрелки" (как во втором примере предела). Копределом такого функтора называется коуравнитель $Coeq(f, g)$ со следующим свойством: $\forall Z \in C$ со стрелкой $h: Y \ra Z$, сохраняющей коммутативность диаграммы, т.е. $h \circ f = h \circ g$, $\exists ! \phi: Coeq(f, g) \ra Z$, сохраняющая коммутативность диаграммы
+    \begin{center}\includegraphics[scale=0.7]{couravnitel-toxic.PNG}\end{center}
+    \item D - натуральные числа как упорядоченное множество. Функтор переводит их в $(X_i)_{i \in \mathbb{N}}$. Если предположить, что $C = Sets$ и $X_i \ra X_{i+1}$ - вложения, то $Colim X_i = \cup X_i$
+\end{enumerate}
+\defn Категория $C$ называется \se{полная категория}{полной}, если в $C$ есть все (малые) пределы. Т.е. $\forall D$ - малой и $\forall F: D \ra C$ $\exists \lim F$ \\
+
+
+\theorem $C$ - полная $Lra$ в $C$ существуют произведения и уравнители \\
+
+Доказательство: \\
+$\Ra$ - очевидно (существуют все пределы, значит существуют и их частные случаи) \\
+$\La$: $lim F = Eq()$
+
+\normalfont
+
+
+\section{Сопряжённые функторы}
+\defn Функторы $F: C \longrightarrow D$ и $G: D \longrightarrow C$ называются \se{Сопряжённые функторы}{сопряжёнными}, если задан естественный изоморфизм бифункторов: $Hom_D(F(X), Y) \simeq Hom_C(X, G(Y))$. $F$ в этом случае сопряжённый \textit{слева} к $G$.
+\\Примеры сопряжённых функторов: \begin{itemize}
+\item $G: Groups \longrightarrow Sets$ -- забывающий функтор, $F: Sets \longrightarrow Groups$ -- $F(X)$ -- свободная группа;
+\item $G: Ab \longrightarrow Groups$ -- в некотором смысле тоже забывающий, $F: Groups \longrightarrow Ab$: $F(H) = H^{ab} = H/[H, H]$;
+\item $G: Vect_K \longrightarrow Sets$ -- забывающий, $F: Sets \rightarrow Vect_K$, $F(I) = K^{(I)}$;
+\item $G: CommRings \longrightarrow Sets$ -- забывающий, $F: Sets \longrightarrow CommRings$: $F(X) = \ZZ [X]$;
+\item $G: Rings \longrightarrow Sets$ -- забывающий, $F: Sets \longrightarrow Rings$, $F(X) = \ZZ {X} = T^*(\ZZ ^{(X)})$;
+\item $G: K-Alg \longrightarrow Vect_K$ -- <<забывающий>>, $F: Vect_K \longrightarrow K-Alg$: $F(V) = T^*(V)$;
+\exer $F: (\ZZ, le) \longrightarrow (\RR, le)$, найти сопряжённые слева и справа.
+\begin{theorem}
+Если $F: C \longrightarrow D$ сопряжённый слева к $G: D \longrightarrow C$, то $G$ сохраняет пределы, а $F$ -- копределы, то есть $G(\lim K) \simeq \lim (G \circ K)$.  
+\begin{proof}
+Надо задать $Hom_C(X, G(\lim K)) \simeq Nat(const_X, G \circ K)$, воспользуемся сопряжённостью функторов и определением предела: $Hom_C(X, G(\lim K)) \simeq Hom_D(F(X), \lim K) \simeq Nat(const_{F(X)}, K) \simeq Nat(const_X, G \circ K)$. 
+\end{proof}
+\end{theorem}
+
+\begin{theorem} \se{Теорема Фрейда}{Теорема Фрейда}: Пусть $D$ полна, $G: D \longrightarrow C$ сохраняет пределы и выполнено условие $(*)$:
+\\ $\forall X \in C \exists \lbrace A_i \rbrace_{i \in I(X)}$, где $I(X)$ -- множество объектов $D$, вместе с $f_i : X \longrightarrow G(A_i)$, такое что для любых $A \in D$ и $f: X \longrightarrow G(A)$, $\exists \phi_i : A_i \longrightarrow A: f = G(phi_i) \circ f_i$. Тогда у $G$ есть сопряжённый слева. 
+\begin{proof}
+Определим \se{Категория стрелок}{категорию стрелок}: $X/G$, $ObX/G = f: X \rightarrow G(A)$, $Mor(f: X \rightarrow G(A), g: X \rightarrow G(B)) = \lbrace \phi: A \rightarrow B: G(\phi) \circ f = g$.
+\begin{lemma} У $G$ есть сопряжённый слева \Leftrightarrow $\forall X \in C$ в $X/G$ есть инициальный объект.
+\begin{proof} Надо задать $forall X F(X) \in D$, $\eta_X: X \rightarrow G(F(X)): Hom(X, G(Y)) \simeq Hom(F(X), Y)$ так что $\forall \phi \in Hom(F(X), Y), \phi \longleftrightarrow G(\phi)\circ \eta_X$ задаёт биекцию. Так как $Hom(инициальный$ объект, --) -- одноэлементное множество, для любых $X, Y, f: X \rightarrow G(Y)$, должен существовать единственный морфизм $G(F(X)) \rightarrow G(Y)$, делающий диаграмму коммутативной: 
+ \begin{center}\includegraphics[scale=0.3]{lemma_for_Freid (1).pdf}\end{center}
+
+\\Пусть $F$ у нас есть, возьмём в качестве $\eta_X$ элемент $Hom(X, G(F(X)) \simeq Hom(F(X), F(X))$, соответствующий $id_{F(X)}$.
+\\В другую сторону: определим $F(X)$ через лемму Йонеды как объект, такой что $Hom_D(F(X), Y) \simeq Hom_C(X, G(Y))$, $\phi \rightarrow G(\phi) \circ \eta_X$. $f: X \rightarrow X'$, $Hom(F(X), F(X') \simeq Hom(X, G(F(X'))$, определим $F(f)$ как морфизм, соответствующий $\eta_{X'} \circ f$, тогда $G(F(f)) \circ \eta_X = \eta_{X'} \circ f$. Проверим, что $F$ сохраняет композицию:  $X \xrightarrow[]{f} X' \xrightarrow[]{f'} X''$. $F(f' \circ f) = F(f') \circ F(f)$ \Leftrightarrow $G(F(f') \circ F(f)) \circ \eta_X = \eta_{X''} \circ f' circ f$. Левая часть равна $GF(f') \circ GF(f) \circ \eta_X$, правая = $GF(f') \circ \eta_{X'} \circ f = GF(f') \circ GF(f) \circ \eta_X$.
+
+\end{proof}
+\end{lemma}
+\end{proof}
+\end{theorem}
+
+
+\end{itemize}
+
 \hypertarget{dex}
     \printindex
 %staryi_variant
